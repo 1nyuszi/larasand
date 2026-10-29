@@ -24,7 +24,7 @@ class BlogAdminTest extends TestCase
     public function test_admin_can_create_publish_and_edit_an_article_with_tags(): void
     {
         $this->freezeTime();
-        $admin = User::factory()->create(['email' => 'editor@gmail.com']);
+        $admin = User::factory()->admin()->create(['email' => 'editor@example.com']);
         $category = Category::factory()->create();
         $tag = Tag::factory()->create();
         $this->actingAs($admin);
@@ -52,7 +52,7 @@ class BlogAdminTest extends TestCase
 
     public function test_admin_can_manage_categories_and_tags(): void
     {
-        $this->actingAs(User::factory()->create(['email' => 'editor@gmail.com']));
+        $this->actingAs(User::factory()->admin()->create(['email' => 'editor@example.com']));
         Filament::setCurrentPanel(Filament::getPanel('admin'));
 
         Livewire::test(ManageCategories::class)->callAction('create', data: [
@@ -68,7 +68,7 @@ class BlogAdminTest extends TestCase
 
     public function test_admin_form_rejects_missing_fields_and_duplicate_or_invalid_slugs(): void
     {
-        $this->actingAs(User::factory()->create(['email' => 'editor@gmail.com']));
+        $this->actingAs(User::factory()->admin()->create(['email' => 'editor@example.com']));
         Filament::setCurrentPanel(Filament::getPanel('admin'));
         $post = Post::factory()->create(['slug' => 'existing']);
 
@@ -99,7 +99,7 @@ class BlogAdminTest extends TestCase
     {
         $this->freezeTime();
         Storage::fake('public');
-        $admin = User::factory()->create(['email' => 'editor@gmail.com']);
+        $admin = User::factory()->admin()->create(['email' => 'editor@example.com']);
         $category = Category::factory()->create();
         $tag = Tag::factory()->create();
         $this->actingAs($admin);
